@@ -6,7 +6,7 @@ contacts=[]
 hours=[]
 name = "Caetano - Cabo verde "
 try:
-     with open("/mnt/c/Users/HP/Documents/datacolletor/src//caetano_renta_car/static/caetano_location.html", "r", encoding="utf-8") as file:
+     with open("caetano_renta_car/static/caetano_location.html", "r", encoding="utf-8") as file:
          html_content = file.read()
 
 except:

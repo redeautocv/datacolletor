@@ -11,10 +11,10 @@ message=[]
 
 # Leitura dos arquivos HTML
 #/mnt/c/Users/HP/Documents/datacolletor/src/Announcement
-with open("/mnt/c/Users/HP/Documents/datacolletor/src/caetano_renta_car/static/Rent-a-Car _ Caetano Cabo Verde.html", "r", encoding="utf-8") as file:
+with open("caetano_renta_car/static/Rent-a-Car _ Caetano Cabo Verde.html", "r", encoding="utf-8") as file:
     html_content = file.read()
 
-with open("/mnt/c/Users/HP/Documents/datacolletor/src//caetano_renta_car/static/caetano_cabo Verde.html", "r", encoding="utf-8") as file:
+with open("caetano_renta_car/static/caetano_cabo Verde.html", "r", encoding="utf-8") as file:
     html_content_one = file.read()
 
 # Parsing dos arquivos HTML
