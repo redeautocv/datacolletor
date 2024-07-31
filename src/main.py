@@ -1,20 +1,20 @@
-from flask import Flask ,request
-from __init__ import  create_app 
+from  . import  create_app 
 import os 
+  
 
-app=  create_app(os.getenv("CONFIG_MODE")) 
 
+ 
+config_mode = os.getenv('CONFIG_MODE') or 'development'
+app = create_app(config_mode)
 
 #DEVELOPMENT_DATABASE_URL="postgresql://psqladminun@pgsql-server-racv:H@camelo!@pgsql-server-racv.postgres.database.azure.com/racvdb"
-
-@app.route('/ff')
+#psql -h pgsql-server-racv.postgres.database.azure.com -U psqladminun@pgsql-server-racv -d racvdb
+@app.route('/')
 def hello():
     return "Hello World!"
+
+from  .caetano_renta_car.logs import *
  
-from app.logs import * 
-
-
 if __name__=='__main__':
  
-    print("kfkfk")
-    app.run(debug=True)
+     app.run(debug=True)
