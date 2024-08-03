@@ -3,7 +3,6 @@ from sqlalchemy.inspection import inspect
 from sqlalchemy import Column , String , Integer , ForeignKey
 from sqlalchemy.orm import relationship
 from .. import dbt
-
 class Announcement(dbt.Model):
     __tablename__='t_ad'
     id_ad = dbt.Column(dbt.Integer, primary_key=True, nullable=False, unique=True , autoincrement=True)
@@ -40,7 +39,7 @@ class Advertiser(dbt.Model):
         
 
 class Location ( dbt.Model):
-     __tablename__= "t_location"
+     __tablename__= "T_LOCATION"
      id_location = dbt.Column ( dbt.Integer , primary_key=True , unique=True , nullable =False , autoincrement=True)
      county=dbt.Column(dbt.String(45))
      island=dbt.Column(dbt.String(45))

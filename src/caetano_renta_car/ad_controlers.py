@@ -1,5 +1,5 @@
-import requests
 from bs4 import BeautifulSoup
+from .advertiser_controller import adress
 
 TOTAL_ANUNCIOS =0
 marca_carro = []
@@ -8,7 +8,10 @@ taxas_extras = []
 preco = []
 intervalo = []
 message=[]
-
+listings=[]
+locations=[]
+ads=[]
+dati=[]
 # Leitura dos arquivos HTML
 #/mnt/c/Users/HP/Documents/datacolletor/src/Announcement
 with open("caetano_renta_car/static/Rent-a-Car _ Caetano Cabo Verde.html", "r", encoding="utf-8") as file:
@@ -69,6 +72,38 @@ for num in number_announcement:
         preco.append(tag.find_all('strong'))
 
 message.append(tagsSites_Message)
+
+
+#estilizar codigo para envio json
+for  lista  in range(0,TOTAL_ANUNCIOS):
+    listing= { "listings":[
+            {"brand": marca_carro[lista][0].text},  
+            {"passenger_number":numero_lugares[lista][0].text },
+            {"price":preco[lista][0].text},
+            {"extra_fees":taxas_extras[lista][0].text },
+            {"fuel_type":numero_lugares[lista][1].text}
+        ]
+    }
+    listings.append(listing)
+
+for  number  in range(0,12,3):
+    location= { "locations":[
+             {"county": adress[number+1]}
+         ]  
+     }
+    locations.append(location)
+
+for  nume  in range(1,12,3):
+    ad={ "advertisers": [
+          {"contact": adress [nume]} ,
+          {"company_name": "Caetano Cabo verde"}  
+        ]
+    }
+    ads.append(ad)
+
+dati.append(ads)
+dati.append(locations)
+dati.append(listings)
 
 # Print (opcional) para verificar os resultados
 #print(marca_carro)
