@@ -11,6 +11,7 @@ app = create_app(config_mode)
 #psql -h pgsql-server-racv.postgres.database.azure.com -U psqladminun@pgsql-server-racv -d racvdb
 @app.route('/')
 def hello():
+    
     return "Hello World!"
 
 from  .caetano_renta_car.logs import *

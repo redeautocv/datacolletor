@@ -6,30 +6,27 @@ from .. import dbt
 class Announcement(dbt.Model):
     __tablename__='t_ad'
     id_ad = dbt.Column(dbt.Integer, primary_key=True, nullable=False, unique=True , autoincrement=True)
-    model = dbt.Column(dbt.String(45))
-    passenger_number = dbt.Column(dbt.String(45))
-    extra_fees= dbt.Column(dbt.String(45))
-    price= dbt.Column(dbt.String(45))
-    brand= dbt.Column(dbt.String(45))
-    fuel_type=dbt.Column(dbt.String(45))
-    door_number=dbt.Column(dbt.String(45))
+    model = dbt.Column(dbt.String(145))
+    passenger_number = dbt.Column(dbt.String(145))
+    extra_fees= dbt.Column(dbt.String(145))
+    price= dbt.Column(dbt.String(145))
+    brand= dbt.Column(dbt.String(145))
+    fuel_type=dbt.Column(dbt.String(145))
+    door_number=dbt.Column(dbt.String(145))
     available= dbt.Column(dbt.Boolean)
     t_advertiser_id_advertiser= dbt.Column(dbt.Integer, dbt.ForeignKey("t_advertiser.id_advertiser") )
     
     def to_dict(self):
         return {c.key: getattr(self, c.key) for c in inspect(self).mapper.column_attrs}
-
-
 class Advertiser(dbt.Model):
-
     __tablename__='t_advertiser'
     id_advertiser= dbt.Column ( dbt.Integer ,unique=True ,nullable =False, primary_key=True , autoincrement=True)
-    company_name = dbt.Column ( dbt.String(45) )
-    contact = dbt.Column ( dbt.String(45))
-    start_hour= dbt.Column (dbt.String(45))
+    company_name = dbt.Column ( dbt.String(145) )
+    contact = dbt.Column ( dbt.String(145))
+    start_hour= dbt.Column (dbt.String(145))
     end_hour= dbt.Column(dbt.Time)
-    email = dbt.Column (dbt.String(45))
-    message= dbt.Column(dbt.String(45))
+    email = dbt.Column (dbt.String(145))
+    message= dbt.Column(dbt.String(145))
     locations = dbt.relationship('Location' , backref='Advertiser' )
     ads = dbt.relationship('Announcement', backref='Advertiser' )  
 
@@ -39,7 +36,7 @@ class Advertiser(dbt.Model):
         
 
 class Location ( dbt.Model):
-     __tablename__= "T_LOCATION"
+     __tablename__= "t_location"
      id_location = dbt.Column ( dbt.Integer , primary_key=True , unique=True , nullable =False , autoincrement=True)
      county=dbt.Column(dbt.String(45))
      island=dbt.Column(dbt.String(45))

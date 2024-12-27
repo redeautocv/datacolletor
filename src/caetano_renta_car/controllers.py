@@ -11,8 +11,6 @@ def  list_all_tables_Announcemet ():
   for x in dataformAnnot :
      form.append(x.to_dict())
   
-  
-  
 
 def list_all_tables_advertiser():
   dataformAdveriser= Advertiser.query.all()
@@ -37,11 +35,10 @@ def create_tables ():
    tables_ad=[]
    tables_loc=[]
    tables_annc=[]
-
    request_form = request.form.to_dict()
   
    for x in range ( 1,12,3):
-       table_advertiser= Advertiser( contact=adress[x] ,company_name= name , message = message[0])
+       table_advertiser= Advertiser( contact=adress[x] ,company_name= name )
        tables_ad.append(table_advertiser)
    for  tables in tables_ad:
       dbt.session.add(tables)
