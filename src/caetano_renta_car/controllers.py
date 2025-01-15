@@ -11,7 +11,7 @@ def  list_all_tables_Announcemet ():
   for x in dataformAnnot :
      form.append(x.to_dict())
   
-
+   
 def list_all_tables_advertiser():
   dataformAdveriser= Advertiser.query.all()
   formAdvert=[]
