@@ -1,14 +1,10 @@
 # This workflow will install Python dependencies, run tests and lint with a single version of Python
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-python
-# origin
-
-name: data colletor
+name: Racv flask application
 
 on:
   push:
-    branches: [ "master" ]
-  pull_request:
-    branches: [ "master" ]
+    branches: [ "master"]
 
 permissions:
   contents: read
@@ -24,17 +20,72 @@ jobs:
       uses: actions/setup-python@v3
       with:
         python-version: "3.10"
+    
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install flake8 pytest
+        pip install -r requirements.txt
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+    
     - name: Lint with flake8
-      run: |
+      run: |-
         # stop the build if there are Python syntax errors or undefined names
         flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
         # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
-    - name: Test with pytest
+    
+    - name: List directory contents
       run: |
-        pytest
+        ls -al    
+    
+    - name: Tests  
+      run: |
+        python -m venv .env
+        source .env/bin/activate
+        PYTHONPATH=$(pwd) pytest ./tests/
+  
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    
+    if: success()
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v3
+   
+    - name: zipair package pacote to deploy
+      run: |
+          zip -r racv.zip . -x "venv/*" ".git/*" "*.zip" 
+        
+    - name: Set Up SSH Key
+      shell: bash
+      run: |
+        echo "${{ secrets.DEV_SSH_KEY }}" > ~/racv_key.pem
+        chmod 400 ~/racv_key.pem
+
+    - name: Deploy and Run Code
+      shell: bash
+      run: |
+        # Copy all project files to the EC2 instance
+        scp -o StrictHostKeyChecking=no -i ~/racv_key.pem -r /home/runner/work/racv-listings/racv-listings/racv.zip ${{ vars.RACV_VM_PASS__DEV }}@${{ vars.DEV_SERVER_IP }}:/home/redeautocvuser/
+        
+        # SSH into the EC2 instance and deploy
+        ssh -o StrictHostKeyChecking=no -i ~/racv_key.pem ${{ vars.RACV_VM_PASS__DEV }}@${{ vars.DEV_SERVER_IP }} "
+        
+        # unpack and create the path to the package
+        cd /home/redeautocvuser/
+        rm -rf /home/redeautocvuser/racv/
+        unz ip racv.zip -d /home/redeautocvuser/racv/
+        cd racv
+        
+        #create python virtual environment and install dependencies to run  
+        python -m pip install --upgrade pip
+        python -m venv .env
+        source .env/bin/activate
+        pip install -r requirements.txt
+        cd /home/redeautocvuser/racv/src/
+
+        #Run app flask 
+        nohup flask run --host=0.0.0.0 --port=5000 > flask.log 2>&1 &
+        "         
