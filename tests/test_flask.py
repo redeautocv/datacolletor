@@ -3,7 +3,7 @@ from src.app import create_app
 
 @pytest.fixture
 def cliente():
-    app = create_app("testing")  # Presuma que existe uma config 'testing'
+    app = create_app("development")  # Presuma que existe uma config 'testing'
     #app.config["TESTING"] = True 
     with app.test_client() as cliente:
         yield cliente
