@@ -21,4 +21,4 @@ for x in tags_location:
     contacts.append(x.text)
     hours.append(x.text)
 
-print("ddd", adress [0])
+print( adress )
