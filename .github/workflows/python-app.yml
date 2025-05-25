@@ -43,7 +43,7 @@ jobs:
     
     - name: Tests  
       run: |
-        python -m venv env
+        python -m .venv env
         source env/bin/activate
         PYTHONPATH=$(pwd) pytest ./tests/
   
