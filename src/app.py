@@ -1,9 +1,7 @@
 from  . import  create_app 
+
 import os 
   
-
-
- 
 config_mode = os.getenv('CONFIG_MODE') or 'development'
 app = create_app(config_mode)
 
@@ -14,7 +12,8 @@ def hello():
     
     return "Hello World!"
 
-from  .caetano_renta_car.logs import *
+
+from  .collector.urls import *
  
 if __name__=='__main__':
  

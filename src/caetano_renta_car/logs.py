@@ -2,7 +2,7 @@ import requests
 from .controllers import create_tables
 from flask import  request ,jsonify 
 from  .ad_controlers import ads ,listings , dati ,locations
-from  ..main import app
+from  ..app import app
 import json
 
 

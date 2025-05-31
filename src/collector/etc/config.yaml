@@ -1,0 +1,19 @@
+---
+ sites: 
+   anunciante:
+      nome_empresa: Caetano Cabo verde  
+      tipo_negocio: Aluguer de carros
+      link_negocio: https://caetano.cv
+   localizacao:
+      link: https://caetano.cv/onde-estamos/
+      morada: /html/body/section[2]/div[2]/div/div[2]/div[1]/p[2]
+      telefone: /html/body/section[2]/div[2]/div/div[2]/div[2]/p[2]
+      horario: /html/body/section[2]/div[2]/div/div[2]/div[3]/p[2]
+   anuncio:
+      link: https://caetano-cpv.caetano.africa/campanhas/rent-a-car/
+      marca:  /html/body/div[1]/div[2]/div/div[3]/h2/span/strong
+      numero_lugares: /html/body/div[1]/div[2]/div/div[4]/h2/span/strong[1]
+      combustivel: /html/body/div[1]/div[2]/div/div[4]/h2/span/strong[2]
+      taxa_extra: /html/body/div[1]/div[2]/div/div[5]/h2/span/text()
+      preco: /html/body/div[1]/div[2]/div/div[7]/h2/span[1]/strong 
+ 
