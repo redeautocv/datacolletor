@@ -1,19 +1,44 @@
 ---
- sites: 
-   anunciante:
-      nome_empresa: Caetano Cabo verde  
-      tipo_negocio: Aluguer de carros
-      link_negocio: https://caetano.cv
-   localizacao:
-      link: https://caetano.cv/onde-estamos/
-      morada: /html/body/section[2]/div[2]/div/div[2]/div[1]/p[2]
-      telefone: /html/body/section[2]/div[2]/div/div[2]/div[2]/p[2]
-      horario: /html/body/section[2]/div[2]/div/div[2]/div[3]/p[2]
-   anuncio:
-      link: https://caetano-cpv.caetano.africa/campanhas/rent-a-car/
-      marca:  /html/body/div[1]/div[2]/div/div[3]/h2/span/strong
-      numero_lugares: /html/body/div[1]/div[2]/div/div[4]/h2/span/strong[1]
-      combustivel: /html/body/div[1]/div[2]/div/div[4]/h2/span/strong[2]
-      taxa_extra: /html/body/div[1]/div[2]/div/div[5]/h2/span/text()
-      preco: /html/body/div[1]/div[2]/div/div[7]/h2/span[1]/strong 
- 
+sites:
+  - anunciante:
+      nome_empresa: Luzcar Cabo Verde
+      tipo_negocio: Luzcar
+      link_negocio: https://www.luzcar.cv/
+
+    localizacao:
+      link: https://www.luzcar.cv/
+      morada: /html/body/div[2]/main/div[5]/div[2]/table/tbody/tr[2]/td[1]/p/text()
+      telefone: /html/body/div[2]/main/div[5]/div[2]/table/tbody/tr[2]/td[2]/p
+      horario: ""
+
+    anuncio:
+      link: https://www.luzcar.cv/
+      marca: /html/body/div[2]/main/div[3]/div/div[2]/div[1]/div[8]/div/div[2]/h2
+      numero_lugares: /html/body/div[2]/main/div[3]/div/div[2]/div/div/div/div[2]/p[1]
+      combustivel: /html/body/div[2]/main/div[3]/div/div[2]/div[1]/div/div/div[2]/p[3]
+      taxa_extra: ""
+      preco: /html/body/div[2]/main/div[3]/div/div[2]/div[1]/div/div/div[3]/h2[1]
+      ano: ""
+      transmissao: ""
+
+  - anunciante:
+      nome_empresa: Turiscar
+      tipo_negocio: Rent-a-car
+      link_negocio: https://turiscar.cv
+
+    localizacao:
+      link: https://turiscar.cv/contactos/
+      morada: /html/body/div[1]/div/main/div/section[2]/div/div[2]/div/section[4]/div/div[1]/div/div/div/div/div[2]/p/text()
+      telefone: /html/body/div[1]/div/main/div/section[2]/div/div[2]/div/section[1]/div/div[1]/div/div/div/div/div[2]/p/text()
+      horario: /html/body/div[1]/div/main/div/section[2]/div/div[2]/div/section[3]/div/div[1]/div/div/div/div/div[2]/p/text() 
+                
+    anuncio:
+      link: https://turiscar.cv/frota/
+      marca: /html/body/div[1]/div/main/div/section[2]/div/div[1]/div/div[1]/div/h2
+      numero_lugares: /html/body/div[1]/div/main/div/section[2]/div/div[2]/div/section[5]/div/div[2]/div/div/div/h2
+      combustivel: /html/body/div[1]/div/main/div/section[2]/div/div[2]/div/section[4]/div/div[2]/div/div/div/h2
+      taxa_extra: ""
+      preco: ""
+      ano: /html/body/div[1]/div/main/div/section[2]/div/div[2]/div/section[1]/div/div[2]/div/div/div/h2
+      transmissao: /html/body/div[1]/div/main/div/section[2]/div/div[2]/div/section[2]/div/div[2]/div/div/div/h2
+                  

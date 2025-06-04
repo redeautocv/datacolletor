@@ -10,14 +10,18 @@ from  .services import Collect
 
 def collect():
     colection = Collect()
-    tree_html_anuncio, tree_html_morada = colection._request_http()
-    data_gross_anuncios_numero, data_gross_loclizacao_empresa = colection.extraction_content(tree_html_anuncio, tree_html_morada)
+    tree_html_announcement, tree_html_location = colection._request_http()
+    tree_html_announcement, tree_html_location = colection._request_http_offline()
     
-    numero_anuncios = len(data_gross_anuncios_numero)
-    data_gross_anuncios, data_gross_loclizacao_empresa = colection.extraction_content(tree_html_anuncio, tree_html_morada)
-    numero_anuncios =  len(data_gross_anuncios)
-    numero_localizacao_empresa =  len(data_gross_loclizacao_empresa)
 
+    data_gross_announcement, data_gross_location_companies = colection.extraction_content(tree_html_announcement, tree_html_location )
+    """    
+    number_annoumcement =  len(data_gross_announcement)
+    number_locations_companies =  len(data_gross_location_companies)
+    
+    print (data_gross_announcement)
+    """
+    """
     try:
         
         #date_manufacture= request_data['manufacture_year']
@@ -25,8 +29,8 @@ def collect():
         
         response= Advertiser.query.get(id)
 
-        for contador in range (numero_anuncios):
-            model = data_gross_anuncios[numero_anuncios]
+        for contador in range (number_annoumcement):
+            model = data_gross_announcement[contador]
             
             listing = Listing( 
                 model = model['listings']['model'],
@@ -38,13 +42,14 @@ def collect():
                 door_number = model['listings']['door_number'],
                 t_advertiser_id_advertiser = 1
             ) 
+            print( model['listings']['model'])
         dbt.session.add(listing)
         dbt.session.commit()
-
+     
       
     except Exception as e:
         return e
-
+    """
     
 
 
