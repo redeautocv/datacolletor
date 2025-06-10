@@ -1,9 +1,7 @@
 from dataclasses import dataclass
 @dataclass
-class DataContent:
-    content_telefone : str
-    content_morada : str
-    content_horario : str
+class DataContentAnnouncement:
+
     content_marca : str
     content_numero_lugares : str
     content_combustivel : str
