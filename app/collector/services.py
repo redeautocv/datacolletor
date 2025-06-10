@@ -27,40 +27,24 @@ class Collect:
         return tree_html          
 
     def extraction_content_location(self, tree_html_location, location):
+
+        telefone = self._get_xpath_value(tree_html_location, location['localizacao']['telefone'])
+        morada = self._get_xpath_value(tree_html_location, location['localizacao']['morada'])
+        horario = self._get_xpath_value(tree_html_location, location['localizacao']['horario'])
             
-            data_xpath = DataXpathLocation( 
-                location['localizacao']['telefone'],
-                location['localizacao']['morada'],
-                location['localizacao']['horario'],
-            ) 
+        data_content = DataContentLocation(telefone, morada, horario)
             
-            telefone = self._get_xpath_value(tree_html_location, data_xpath.xpath_telefone)
-            morada = self._get_xpath_value(tree_html_location, data_xpath.xpath_morada)
-            horario = self._get_xpath_value(tree_html_location, data_xpath.xpath_telefone)
-            
-            data_content = DataContentLocation(telefone, morada, horario)
-            
-            return asdict(data_content)
+        return asdict(data_content)
     
     def extraction_content_annouct(self, tree_html_announcement, announcement):
         
-        data_xpath = DataXpathAnnouncement( 
-            announcement['anuncio']['marca'],
-            announcement['anuncio']['numero_lugares'],
-            announcement['anuncio']['combustivel'],
-            announcement['anuncio']['ano'],
-            announcement['anuncio']['preco'],
-            announcement['anuncio']['taxa_extra'],
-            announcement['anuncio']['transmissao'],
-        ) 
-        
-        marca = self._get_xpath_value(tree_html_announcement, data_xpath.xpath_marca)
-        numero_lugares = self._get_xpath_value(tree_html_announcement, data_xpath.xpath_numero_lugares)
-        combustivel = self._get_xpath_value(tree_html_announcement, data_xpath.xpath_combustivel)
-        ano = self._get_xpath_value(tree_html_announcement, data_xpath.xpath_ano)
-        preco = self._get_xpath_value(tree_html_announcement, data_xpath.xpath_preco)
-        taxa_extra = self._get_xpath_value(tree_html_announcement, data_xpath.xpath_taxa_extra)
-        transmissao = self._get_xpath_value(tree_html_announcement, data_xpath.xpath_transmisão)
+        marca = self._get_xpath_value(tree_html_announcement, announcement['anuncio']['marca'])
+        numero_lugares = self._get_xpath_value(tree_html_announcement, announcement['anuncio']['numero_lugares'])
+        combustivel = self._get_xpath_value(tree_html_announcement, announcement['anuncio']['combustivel'])
+        ano = self._get_xpath_value(tree_html_announcement, announcement['anuncio']['ano'])
+        preco = self._get_xpath_value(tree_html_announcement, announcement['anuncio']['preco'])
+        taxa_extra = self._get_xpath_value(tree_html_announcement, announcement['anuncio']['taxa_extra'])
+        transmissao = self._get_xpath_value(tree_html_announcement, announcement['anuncio']['transmissao'])
         
         data_content = DataContentAnnouncement(
             marca, numero_lugares, combustivel, ano, preco, taxa_extra, transmissao
