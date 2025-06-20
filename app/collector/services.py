@@ -4,7 +4,9 @@ from lxml import html,etree
 from dataclasses import  dataclass, asdict
 from pprint import pprint
 
-
+from schema import Anuncio 
+from schema import Utilizador
+from schema import Avaliacao
 from ..collector.models.models import Listing, Advertiser, Location 
 from  ..collector.model_data.data_json import  DataGross
 from  ..collector.model_data.data_annouct import  DataXpathAnnouncement
@@ -32,9 +34,12 @@ class Collect:
         morada = self._get_xpath_value(tree_html_location, location['localizacao']['morada'])
         horario = self._get_xpath_value(tree_html_location, location['localizacao']['horario'])
             
-        data_content = DataContentLocation(telefone, morada, horario)
+        utilizador = Utilizador()
+        utilizador.telefone = telefone  
+        utilizador.endereco = morada  
+        utilizador.hora_funcionamento = horario  
             
-        return asdict(data_content)
+        return utilizador
     
     def extraction_content_annouct(self, tree_html_announcement, announcement):
         

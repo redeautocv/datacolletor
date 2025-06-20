@@ -8,6 +8,8 @@ from .. import  dbt
 from  ..collector.models.models import Listing, Advertiser, Location
 from  ..collector.models.collector import  DataCollector
 from  .services import Collect
+from schema import Anuncio,Utilizador,Avaliacao
+
 
 def collect():
     colection = Collect()
@@ -28,6 +30,9 @@ def collect():
             data_gross_location = colection.extraction_content_location(tree_html_location, site)
             data_gross_annouct = colection.extraction_content_annouct(tree_html_announcement, site)
             
+            print(data_gross_location)
+            print("--------------------------------------------------------------")
+            
             data_json.append(data_gross_location)
             data_json.append(data_gross_annouct)
     
@@ -45,7 +50,7 @@ def create(data_groos):
         dados_anuncios = data_groos, 
         dados_localizacao = data_groos,
     )            
-
+     
     dbt.session.add(novo_registro)
     dbt.session.commit()
 
