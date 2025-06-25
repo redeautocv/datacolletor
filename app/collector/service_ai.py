@@ -1,61 +1,109 @@
 import os
-from dotenv import load_dotenv
-import requests
-from datetime import datetime, timezone
 import json
+from datetime import datetime, timezone
+from dotenv import load_dotenv
 
+import requests
+from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain.prompts import PromptTemplate
 from langchain.output_parsers import StructuredOutputParser, ResponseSchema
-from langchain_openai import ChatOpenAI
-import openai
 
-openai.api_key = "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"
-schemas = [
-    ResponseSchema(name="marca", description="Marca do carro"),
-    ResponseSchema(name="modelo", description="Modelo do carro"),
-    ResponseSchema(name="numero_passageiro", description="Número de passageiros"),
-    ResponseSchema(name="combustivel", description="Tipo de combustível"),
-    ResponseSchema(name="ano", description="Ano do carro"),
-    ResponseSchema(name="preco", description="Preço do aluguel"),
-    ResponseSchema(name="caucao", description="Valor da caução"),
-    ResponseSchema(name="fotografia", description="URL da imagem do carro"),
-    ResponseSchema(name="caixa_velocidade", description="Tipo de caixa de velocidade"),
-    ResponseSchema(name="ar_condicionado", description="Tem ar condicionado?"),
-    ResponseSchema(name="gps", description="Tem GPS?"),
-    ResponseSchema(name="disponibilidade", description="Disponibilidade atual do carro"),
-]
+load_dotenv()
 
-output_parser = StructuredOutputParser.from_response_schemas(schemas)
-format_instructions = output_parser.get_format_instructions()
+def extraction_AI_content_annouct(url):
+    os.environ["GOOGLE_API_KEY"] =  os.getenv('GOOGLE_API_KEY')
 
-prompt = PromptTemplate(
-    template="""
-Você é um extrator de dados inteligente. Receberá um conteúdo HTML de uma página de rent-a-car e deve extrair apenas os dados relevantes do anúncio do carro com os seguintes campos:
+    schemas = [
+        ResponseSchema(name="marca", description="Marca do carro"),
+        ResponseSchema(name="modelo", description="Modelo do carro"),
+        ResponseSchema(name="numero_passageiro", description="Número de passageiros"),
+        ResponseSchema(name="combustivel", description="Tipo de combustível"),
+        ResponseSchema(name="ano", description="Ano do carro"),
+        ResponseSchema(name="preco", description="Preço do aluguel"),
+        ResponseSchema(name="caucao", description="Valor da caução"),
+        ResponseSchema(name="fotografia", description="URL da imagem do carro"),
+        ResponseSchema(name="caixa_velocidade", description="Tipo de caixa de velocidade"),
+        ResponseSchema(name="ar_condicionado", description="Tem ar condicionado?"),
+        ResponseSchema(name="gps", description="Tem GPS?"),
+        ResponseSchema(name="disponibilidade", description="Está Disponivel o carro para aluguer?"),
+        ResponseSchema(name="transmissao", description="É Manual, automatico ou outra configuração? "),
+        ResponseSchema(name="audit_user", description="null"),
+        ResponseSchema(name="Nome_empresa", description="Nome da empresa "),
+        ResponseSchema(name="data", description="data disponivel para aluguel do carro "),
+        ResponseSchema(name="audit_timestamp", description="Hora completa que foi extraido neste formato python agora.strftime('%d/%m/%Y %H:%M')")
+    ]
 
-{format_instructions}
+    output_parser = StructuredOutputParser.from_response_schemas(schemas)
+    format_instructions = output_parser.get_format_instructions()
 
-HTML:
-{html}
-""",
-    input_variables=["html"],
-    partial_variables={"format_instructions": format_instructions},
-)
+    prompt = PromptTemplate(
+        template="""Você é um extrator de dados. Dado o HTML abaixo, extraia todas as informações uniformes dos anuncios de carros com os 
+        seguintes campos no formato demostrado no JSON:{format_instructions} HTML:{html} """, input_variables=["html"],
+        partial_variables={"format_instructions": format_instructions},
+    )
 
-url = "https://caetano-cpv.caetano.africa/campanhas/rent-a-car/"
-html = requests.get(url).text
+    url = url['anuncio']['link']
+    html = requests.get(url).text
 
-llm = ChatOpenAI(model="gpt-3.5-turbo", temperature=0, openai_api_key = openai.api_key)
+    llm = ChatGoogleGenerativeAI(
+        model="gemini-1.5-flash",  # Ou "gemini-2.5-flash"
+        temperature=0,
+        convert_system_message_to_human=True,
+    )
 
-final_prompt = prompt.format(html=html)
+    final_prompt = prompt.format(html=html)
+    output = llm.invoke(final_prompt)
+    conteudo = output.content if hasattr(output, 'content') else str(output)
+    limpo = conteudo.strip().removeprefix("```json").removesuffix("```").strip()
 
-output = llm.predict(final_prompt)
-try:
-    anuncio = output_parser.parse(output)
-    anuncio["data"] = str(datetime.now())
-    anuncio["audit_user"] = "langchain"
-    anuncio["audit_timestamp"] = str(datetime.now(timezone.utc))
+    print (limpo)
+    return limpo
 
-    print(json.dumps(anuncio, indent=4, ensure_ascii=False))
-except Exception as e:
-    print("Erro ao interpretar:", e)
-    print("Resposta bruta:", output)
+
+def extraction_AI_content_user(url):    
+    os.environ["GOOGLE_API_KEY"] =  os.getenv('GOOGLE_API_KEY')
+
+    schemas = [
+        ResponseSchema(name="telefone", description="Numero de telefones da empresa"),
+        ResponseSchema(name="email", description="Email de contacto empresa"),
+        ResponseSchema(name="endereco", description="endereços de funcionamento da empresa"),
+        ResponseSchema(name="foto", description="fotografia da empresa"),
+        ResponseSchema(name="Hora_funcionamento", description="horario de funcionamenta da empresa"),
+        ResponseSchema(name="concelho", description="concelhos de cabo verde que funciona a empresa"),
+        ResponseSchema(name="ilha", description="ilhas de cabo verde que funciona a empresa"),
+        ResponseSchema(name="nome", description="null"),
+        ResponseSchema(name="sobrenome", description="null"),
+        ResponseSchema(name="tipo", description="null"),
+        ResponseSchema(name="audit_user", description="null"),
+        ResponseSchema(name="nome_empresa", description="Nome da empresa "),
+        ResponseSchema(name="audit_timestamp", description="Hora completa que foi extraido neste formato python agora.strftime('%d/%m/%Y %H:%M')")
+    ]
+    output_parser = StructuredOutputParser.from_response_schemas(schemas)
+    format_instructions = output_parser.get_format_instructions()
+   
+    prompt = PromptTemplate(
+        template="""
+        Você é um extrator de dados. Dado o HTML abaixo, extraia todas as informações uniformes dos localização da empresa  com os seguintes campos no formato 
+        demostrado no JSON:{format_instructions} HTML:{html}""",
+        input_variables=["html"],
+        partial_variables={"format_instructions": format_instructions},
+    )
+
+    url = url['utilizador']['link']
+    html = requests.get(url).text
+  
+    llm = ChatGoogleGenerativeAI(
+        model="gemini-2.5-flash",  # Ou "gemini-1.5-flash"
+        temperature=0,
+        convert_system_message_to_human=True,
+    )
+
+    final_prompt = prompt.format(html=html)
+    output = llm.invoke(final_prompt)
+    conteudo = output.content if hasattr(output, 'content') else str(output)
+    conteudo_limpo = conteudo.strip().removeprefix("```json").removesuffix("```").strip()
+
+    print (conteudo_limpo)
+    return conteudo_limpo 
+        
+
