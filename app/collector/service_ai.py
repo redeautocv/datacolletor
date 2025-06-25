@@ -11,7 +11,7 @@ from langchain.output_parsers import StructuredOutputParser, ResponseSchema
 load_dotenv()
 
 def extraction_AI_content_annouct(url):
-    os.environ["GOOGLE_API_KEY"] =  os.getenv('GOOGLE_API_KEY')
+    os.api_key =  os.getenv('GOOGLE_API_KEY')
 
     schemas = [
         ResponseSchema(name="marca", description="Marca do carro"),
@@ -61,7 +61,7 @@ def extraction_AI_content_annouct(url):
 
 
 def extraction_AI_content_user(url):    
-    os.environ["GOOGLE_API_KEY"] =  os.getenv('GOOGLE_API_KEY')
+    os.api_key =  os.getenv('GOOGLE_API_KEY')
 
     schemas = [
         ResponseSchema(name="telefone", description="Numero de telefones da empresa"),
