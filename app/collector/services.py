@@ -39,7 +39,7 @@ class Collect:
         )    
         return asdict(utilizador)
     
-    def extraction_content_annouct(self, tree_html_announcement, announcement):
+    def extraction_content_annouct(self, tree_html_announcement, announcement, indice):
         
         marca = self._get_xpath_value(tree_html_announcement, announcement['anuncio']['marca'])
         numero_passageiro = self._get_xpath_value(tree_html_announcement, announcement['anuncio']['numero_passageiro'])
@@ -49,19 +49,47 @@ class Collect:
         taxa_extra = self._get_xpath_value(tree_html_announcement, announcement['anuncio']['caucao'])
         transmissao = self._get_xpath_value(tree_html_announcement, announcement['anuncio']['transmissao'])
         nome_empresa =  announcement['anuncio']['nome_empresa']   
-        
-        anuncio = Anuncio(
-            marca = marca,
-            numero_passageiro = numero_passageiro,
-            combustivel = combustivel,
-            ano = ano,
-            preco =  preco,
-            caucao = taxa_extra,
-            transmissao = transmissao
+
+        anuncio = Anuncio (
+            marca = self.error_tratament_index_error(marca,indice),
+            numero_passageiro = self.error_tratament_index_error(numero_passageiro,indice),
+            combustivel = self.error_tratament_index_error(combustivel,indice),
+            ano = self.error_tratament_index_error(ano,indice),
+            preco =  self.error_tratament_index_error(preco,indice),
+            caucao = self.error_tratament_index_error(taxa_extra,indice),
+            transmissao = self.error_tratament_index_error(transmissao,indice),  
+            nome_empresa = nome_empresa
         )
         
         return asdict(anuncio)
-            
+    
+    def error_tratament_index_error (self,campo,indice):
+        try:
+            return campo[indice]
+        except IndexError:
+            campo = []
+            campo.insert(-1,"null")
+            return campo
+                
+    def extraction_number_annouct(self,tree_html_announcement, announcement):
+        """
+            Extrair o numero de anuncios registados no html.
+            Sabendo o xpaht completo da informação especifica relativa as marca de viaturas no tree_html. 
+            saberemos quantos anuncios tem o html .  
+
+            Parametros:
+                Tree_html_announcement: árvore completa do html de anuncios de viaturas 
+                announcement: Xpaht permite localizar a informação especifica relativa a marcas de viaturas 
+                          na pagina html em analise
+
+            Retorna:
+                numero_anuncios: retorna o numero de anuncios.    
+        """
+        marca = self._get_xpath_value(tree_html_announcement, announcement['anuncio']['marca'])
+        numero_anuncios = len(marca)
+        print ("OLIME PORRA ", numero_anuncios ,type(numero_anuncios)) 
+        return numero_anuncios
+
     def _get_xpath_value(self,tree_html,xpath):
         value = tree_html.xpath(xpath)
         return value 
