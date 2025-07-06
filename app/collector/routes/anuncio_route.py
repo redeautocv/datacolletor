@@ -8,7 +8,7 @@ from flask import request
 from flask import jsonify  
 
 from   app.collector.services.service import Collect
-from  app.collector.services.service_ai import extraction_AI_content_annouct
+from  app.collector.services.service_ai import CollectIA
 from schema import Anuncio
 from schema import Utilizador
 from schema import Avaliacao
@@ -35,11 +35,10 @@ def data_collect_anuncio():
                for indice in range(numero_anuncios): 
                    dados__annouct = colection.extraction_content_annouct(tree_html_announcement, site, indice)
                    data_json_annouct.append(dados__annouct)  
-           
           
      except Exception as e :
           print("Erro aqui é isto aqui", e)   
-     print(dados__annouct)
+     print(len(data_json_annouct))
      #response =requests.get("http://localhost:5001/listings")
      
      #create(data_json)
@@ -49,25 +48,23 @@ def data_collect_anuncio():
  
 @app.route("/anuncio-ia")
 def data_collect_anuncio_ia():
-     colection = Collect()
-     config_link = colection.config_file()
+     colection = CollectIA()
+     colecao = Collect()
+     config_link = colecao.config_file()
      sites = config_link['sites']  
      data_json_annouct = []   
      
      try :
-         for site in sites:               
-             dados_annouct = extraction_AI_content_annouct(site)
+         for site in sites:                      
+             anuncios = colection.extraction_AI_content_annouct(site)  
+             for anuncio in anuncios:
+                 dados_formatados = colection.format_data(anuncio)
+                 data_json_annouct.append(dados_formatados)   
              time.sleep(120)
-
-             dados_json = json.loads(dados_annouct)
-             data_json_annouct.append(dados_json)   
-             
-
+                 
      except Exception as e :
           print("Erro aqui é isto aqui", e)   
-     print ("--------------------------")
-     print (len(data_json_annouct))
-     print ("--------------------------")
+
      print (data_json_annouct)
      
      #create(data_json)

@@ -67,8 +67,7 @@ class Collect:
         try:
             return campo[indice]
         except IndexError:
-            campo = []
-            campo.insert(-1,"null")
+            campo = None
             return campo
                 
     def extraction_number_annouct(self,tree_html_announcement, announcement):
