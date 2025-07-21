@@ -24,7 +24,6 @@ class Collect:
         tree_html =  html.fromstring(response_http_url.text)
 
         return tree_html          
-
     def extraction_content_user(self, tree_html_location, user):
 
         telefone = self._get_xpath_value(tree_html_location, user['utilizador']['telefone'])

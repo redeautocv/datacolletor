@@ -37,6 +37,7 @@ def data_collect_user():
      except Exception as e :
           print("Erro aqui é isto aqui", e)   
      
+     
      print(len(data_json_user))
      print(data_json_user)
      #create(data_json)

@@ -32,7 +32,7 @@ sites:
       preco: /html/body/div/div[2]/div/div[2]/div[3]/div/h4/text()
       ano:  /html/body/div/div[2]/div[2]/div[2]/div[1]/h5/text()
       transmissao: /html/body/div/div[2]/div/div[2]/div[2]/ul/li[4]/p/text()
-      nome_empresa: /
+      nome_empresa: pegaso Santo Antão
       disponibilidade: /
       gps: /
       ar_condicionado: /
@@ -52,7 +52,7 @@ sites:
       link_offline: /mnt/c/Users/HP/datacolletor/app/collector/file_static/turiscar_contatos.html
       endereco:  /html/body/div[1]/div/main/div/section[2]/div/div[2]/div/section[2]/div/div[2]/div/div/div/div/div[2]/p/text()
       telefone: /html/body/div[1]/div/main/div/section[2]/div/div[2]/div/section[1]/div/div[1]/div/div/div/div/div[2]/p/text()
-      hora_funcionamento: /html/body/div[1]/div/main/div/section[2]/div/div[2]/div/section[3]/div/div[1]/div/div/div/div/div[2]/p/text()[1]
+      hora_funcionamento: /html/body/div[1]/div/main/div/section[2]/div/div[2]/div/section[3]/div/div[1]/div/div/div/div/div[2]/p/text()
       nome_empresa: Turiscar
       concelho: / 
       ilha: / 

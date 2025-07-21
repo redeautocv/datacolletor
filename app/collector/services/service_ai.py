@@ -29,7 +29,7 @@ class CollectIA:
             ResponseSchema(name="ar_condicionado", description="Tem ar condicionado? Se Sim ou Não?Se null coloca no formato python 'None' sem aspas  simples"),
             ResponseSchema(name="gps", description="Tem GPS? Se Sim ou Não?Se null coloca no formato python 'None"),
             ResponseSchema(name="disponibilidade", description="Está Disponivel o carro para aluguer?Se Sim ou Não?"),
-            ResponseSchema(name="audit_user", description="Se null coloca no formato python 'None' sem aspas  simples"),
+            ResponseSchema(name="audit_user", description="Simplesmente 0"),
             ResponseSchema(name="nome_empresa", description="Se null coloca no formato python 'None' sem aspas  simples"),
             ResponseSchema(name="data", description="data de hoje extraido neste formato python time('%d/%m/%Y %H:%M')"),
             ResponseSchema(name="audit_timestamp", description="data de hoje foi extraido neste formato python time('%d/%m/%Y %H:%M')")
