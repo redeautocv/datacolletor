@@ -11,6 +11,7 @@ from dataclasses import   asdict
 
 from schema import Anuncio
 from schema import Utilizador
+
 load_dotenv()
 
 class CollectIA: 
@@ -25,12 +26,11 @@ class CollectIA:
             ResponseSchema(name="preco", description="Preço do aluguel em formato python integer.Se null coloca no formato python 'None' sem aspas  simples"),
             ResponseSchema(name="caucao", description="Valor da caução.Se null coloca no formato python 'None' sem aspas  simples"),
             ResponseSchema(name="fotografia", description="URL da imagem do carro.Se null coloca no formato python 'None' sem aspas  simples"),
-            ResponseSchema(name="transmissao", description="Tipo de caixa de velocidade.Se null coloca no formato python 'None' sem aspas  simples"),
+            ResponseSchema(name="caixa_velocidade", description="Tipo de transmissao.Se null coloca no formato python 'None' sem aspas  simples"),
             ResponseSchema(name="ar_condicionado", description="Tem ar condicionado? Se Sim ou Não?Se null coloca no formato python 'None' sem aspas  simples"),
             ResponseSchema(name="gps", description="Tem GPS? Se Sim ou Não?Se null coloca no formato python 'None"),
             ResponseSchema(name="disponibilidade", description="Está Disponivel o carro para aluguer?Se Sim ou Não?"),
             ResponseSchema(name="audit_user", description="Simplesmente 0"),
-            ResponseSchema(name="nome_empresa", description="Se null coloca no formato python 'None' sem aspas  simples"),
             ResponseSchema(name="data", description="data de hoje extraido neste formato python time('%d/%m/%Y %H:%M')"),
             ResponseSchema(name="audit_timestamp", description="data de hoje foi extraido neste formato python time('%d/%m/%Y %H:%M')")
         ]
@@ -48,7 +48,7 @@ class CollectIA:
         html = requests.get(url).text
 
         llm = ChatGoogleGenerativeAI(
-            model="gemini-1.5-flash",  # Ou "gemini-1.5-flash"
+            model="gemini-2.5-flash",  # Ou "gemini-1.5-flash"
             temperature=0,
             convert_system_message_to_human=True,
         )
@@ -58,7 +58,7 @@ class CollectIA:
         conteudo = output.content if hasattr(output, 'content') else str(output)
         conteudo_limpo = conteudo.strip().removeprefix("```json").removesuffix("```").strip()
         anuncios = json.loads(conteudo_limpo)
-        print(anuncios) 
+        #print(anuncios) 
         return  anuncios
         
     def extraction_AI_content_user(self, url):    
@@ -98,7 +98,7 @@ class CollectIA:
         html = requests.get(url).text
     
         llm = ChatGoogleGenerativeAI(
-            model="gemini-1.5-flash",  # Ou "gemini-1.5-flash"
+            model="gemini-2.5-flash",  # Ou "gemini-1.5-flash"
             temperature=0,
             convert_system_message_to_human=True,
         )
@@ -109,8 +109,8 @@ class CollectIA:
         conteudo_limpo = conteudo.strip().removeprefix("```json").removesuffix("```").strip()
         
         dados_user = json.loads(conteudo_limpo)
-        
-        return self.type_data(*dados_user)
+        return dados_user
+        #return self.type_data(*dados_user)
          
     def type_data(self, data):
          
@@ -133,9 +133,9 @@ class CollectIA:
             ar_condicionado = data["ar_condicionado"],  
             gps = data["gps"], 
             disponibilidade = data["disponibilidade"], 
-            transmissao = data["transmissao"], 
-            nome_empresa = data["nome_empresa"], 
-            audit_user = data["audit_user"], 
+            caixa_velocidade = data["caixa_velocidade"], 
+            audit_user = data["audit_user"],
+            data = data["data"], 
             audit_timestamp = data["audit_timestamp"] 
         )
 
@@ -156,7 +156,9 @@ class CollectIA:
                 ilha = user["ilha"],
                 endereco = user["endereco"],
                 tipo = user["tipo"]
+
             )   
 
+            print(type(utilizador)) 
             return asdict(utilizador)
          

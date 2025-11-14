@@ -1,5 +1,6 @@
 import os 
 
+
 from  . import  create_app 
   
 config_mode = os.getenv('CONFIG_MODE') or 'development'
@@ -11,8 +12,8 @@ def hello():
 
 #from  .collector.urls import *
 from  app.collector.routes.anuncio_route import *
-from  app.collector.routes.utilizador_route import *
+from  app.collector.routes.anunciante_route import *
 
-if __name__=='__main__':
+if __name__=='__main__': 
  
      app.run(debug=True)

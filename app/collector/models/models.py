@@ -1,3 +1,4 @@
+"""
 from flask import Flask ,jsonify
 from sqlalchemy.ext.declarative import declarative_base               
 from sqlalchemy.inspection import inspect
@@ -74,3 +75,4 @@ class Listing( dbt.Model): #anuncio
    
     def to_dict(self):
         return {c.key: getattr(self, c.key) for c in inspect(self).mapper.column_attrs}
+"""

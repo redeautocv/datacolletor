@@ -1,30 +1,26 @@
 ---
 sites:
   - anunciante:
-      tipo_negocio: Rent-a-car
-      link_negocio: https://www.pegaso.cv/
-      link_local : /mnt/c/Users/HP/datacolletor/app/collector/file_static/pegaso_anuncio.html
-       
-    utilizador:
-      link: http://pegaso.cv/contact
-      link_offline : /mnt/c/Users/HP/datacolletor/app/collector/file_static/pegaso_contactos.html
+      tipo: Rent-a-car
+      link: https://www.pegaso.cv/
+      link_local : /home/ruifortes/datacolletor/app/collector/file_static/pegaso_anuncio.html
+      link_contacto: http://pegaso.cv/contact
+      link_contacto_local: /home/ruifortes/datacolletor/app/collector/file_static/pegaso_contactos.html
       endereco: /html/body/main/div/div/div[2]/p[1]/text()
       telefone: /html/body/main/div/div/div[2]/p[2]/text()
-      hora_funcionamento: /html/body/main/div/div/div[2]/p[4]/text()
-      nome_empresa: pegaso Santo Antão
+      horario_funcionamento: /html/body/main/div/div/div[2]/p[4]/text()
+      nome: Pegaso Santo Antão 2 
       concelho: / 
       ilha: / 
-      nome: /
       sexo : /
       sobrenome: /
       foto: /
       descricao: /
-      tipo : /
       email: /
-
+     
     anuncio:
       link: http://pegaso.cv/veicles
-      link_offline : /mnt/c/Users/HP/datacolletor/app/collector/file_static/pegaso_anuncio.html
+      link_local: /home/ruifortes/datacolletor/app/collector/file_static/pegaso_anuncio.html
       marca: /html/body/div[1]/div[2]/div/div[2]/div[1]/h4/text()           
       modelo: /           
       numero_passageiro: /html/body/div[1]/div[2]/div/div[2]/div[2]/ul/li[3]/p/text()
@@ -32,99 +28,92 @@ sites:
       preco: /html/body/div/div[2]/div/div[2]/div[3]/div/h4/text()
       ano:  /html/body/div/div[2]/div[2]/div[2]/div[1]/h5/text()
       transmissao: /html/body/div/div[2]/div/div[2]/div[2]/ul/li[4]/p/text()
-      nome_empresa: pegaso Santo Antão
       disponibilidade: /
       gps: /
+      data: / 
       ar_condicionado: /
-      caixa_velocidade:
+      caixa_velocidade: /
       fotografia: /
       caucao: /
-      audit_user: / 
-      data: / 
-      audit_timestamp: /
 
   - anunciante:
-      tipo_negocio: Rent-a-car
-      link_negocio: https://turiscar.cv
-      
-    utilizador:
-      link: https://turiscar.cv/contactos/
-      link_offline: /mnt/c/Users/HP/datacolletor/app/collector/file_static/turiscar_contatos.html
+      tipo: Rent-a-car
+      link: https://turiscar.cv
+      link_local: /home/ruifortes/datacolletor/app/collector/file_static/turiscar_contatos.html
+      link_contacto: https://turiscar.cv/contactos/
+      link_contacto_local: /home/ruifortes/datacolletor/app/collector/file_static/turiscar_contatos.html
       endereco:  /html/body/div[1]/div/main/div/section[2]/div/div[2]/div/section[2]/div/div[2]/div/div/div/div/div[2]/p/text()
       telefone: /html/body/div[1]/div/main/div/section[2]/div/div[2]/div/section[1]/div/div[1]/div/div/div/div/div[2]/p/text()
-      hora_funcionamento: /html/body/div[1]/div/main/div/section[2]/div/div[2]/div/section[3]/div/div[1]/div/div/div/div/div[2]/p/text()
-      nome_empresa: Turiscar
+      horario_funcionamento: /html/body/div[1]/div/main/div/section[2]/div/div[2]/div/section[3]/div/div[1]/div/div/div/div/div[2]/p/text()
+      nome: Turiscar
       concelho: / 
       ilha: / 
-      nome: /
       sexo : /
       sobrenome: /
       foto: /
       descricao: /
       tipo : /
       email: /    
+     
 
     anuncio:
       link: https://turiscar.cv/frota/
-      link_offline: /mnt/c/Users/HP/datacolletor/app/collector/file_static/turiscar_anuncios.html
+      link_local: /home/ruifortes/datacolletor/app/collector/file_static/turiscar_anuncios.html
       marca: /html/body/div[1]/div/main/div/section/div/div[2]/div/div[1]/div/h2/text()
       numero_passageiro: /html/body/div[1]/div/main/div/section/div/div[2]/div/section[5]/div/div[2]/div/div/div/h2/text()
       combustivel: /html/body/div[1]/div/main/div/section/div/div[2]/div/section[4]/div/div[2]/div/div/div/h2/text()
       ano: /html/body/div[1]/div/main/div/section/div/div[2]/div/section[1]/div/div[2]/div/div/div/h2/text()
       transmissao: /html/body/div[1]/div/main/div/section/div/div[2]/div/section[2]/div/div[2]/div/div/div/h2/text()
+      modelo: /           
       taxa_extra: /
       preco: /
       disponibilidade: /
       gps: /
+      data: / 
       ar_condicionado: /
-      caixa_velocidade:
       fotografia: /
       caucao: /
-      nome_empresa: Turiscar
-      audit_user: / 
-      data : /
-      audit_timestamp: /
-
       
   - anunciante:
-      tipo_negocio: Rent-a-car
+      tipo: Rent-a-car
       link_negocio: https://caetano.cv
-      
-    utilizador:
       link: https://caetano.cv/onde-estamos/
-      link_offline: /mnt/c/Users/HP/datacolletor/app/collector/file_static/caetano_contatos.html
+      link_local: /home/ruifortes/datacolletor/app/collector/file_static/caetano_contatos.html
       endereco:  /html/body/section[2]/div[2]/div/div[2]/div[1]/p[2]/text() 
       telefone: /html/body/section[2]/div[2]/div/div[2]/div[2]/p[2]/text()
-      hora_funcionamento: /html/body/section[2]/div[2]/div/div[2]/div[3]/p[2]/text()
-      nome_empresa: Caetano cabo verde
+      horario_funcionamento: /html/body/section[2]/div[2]/div/div[2]/div[3]/p[2]/text()
+      nome: Caetano cabo verde
       concelho: / 
       ilha: / 
-      nome: /
       sexo : /
       sobrenome: /
       foto: /
       descricao: /
       tipo : /
       email: /
+      audit_timestamp: /
+      audit_user: /
+     
 
     anuncio:
       link: https://caetano-cpv.caetano.africa/campanhas/rent-a-car/
-      link_offline: /mnt/c/Users/HP/datacolletor/app/collector/file_static/caetano_anuncios.html
+      link_local: /home/ruifortes/datacolletor/app/collector/file_static/caetano_anuncios.html
       marca: /html/body/div[1]/div[2]/div/div[3]/h2/span/strong/text()
       numero_passageiro: /html/body/div[1]/div[2]/div/div[4]/h2/span/strong[1]/text()
       combustivel: /html/body/div[1]/div[2]/div/div[4]/h2/span/strong[2]/text()
       taxa_extra: /html/body/div[1]/div[2]/div/div[5]/h2/span/text()
       preco: /html/body/div[1]/div[2]/div/div[7]/h2/span[1]/strong/text()
+      modelo: /           
       ano: /
       transmissao: /
       disponibilidade: /
       gps: /
-      nome_empresa: Caetano cabo verde
+      nome: Caetano cabo verde
       ar_condicionado: /
-      caixa_velocidade:
       fotografia: /
       caucao: /
       audit_user: / 
+      t_advertiser_id_advertiser : /
       data: / 
       audit_timestamp: /
                   

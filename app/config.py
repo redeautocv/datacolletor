@@ -2,7 +2,7 @@ import os
 from dotenv import *
 
 load_dotenv()
- 
+
 class Config:
     SQLALCHEMY_TRACK_MODIFICATIONS = True
 class DevelopmentConfig(Config):
@@ -12,6 +12,7 @@ class DevelopmentConfig(Config):
 class TestingConfig(Config):
     TESTING = True
     SQLALCHEMY_DATABASE_URI = os.getenv("TEST_DATABASE_URL")
+
 class StagingConfig(Config):
     DEVELOPMENT = True
   
@@ -25,4 +26,4 @@ config = {
     "testing": TestingConfig,
     "staging": StagingConfig,
     "production": ProductionConfig
-}     
+}    

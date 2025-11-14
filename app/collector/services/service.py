@@ -1,3 +1,5 @@
+from datetime import datetime
+
 import yaml
 import requests
 from pprint import pprint
@@ -6,10 +8,9 @@ from lxml import etree
 from dataclasses import  dataclass
 from dataclasses import   asdict
 
-
-from schema import Anuncio 
-from schema import Utilizador
-from schema import Avaliacao
+from app.collector.models.anunciante import Anunciante
+from app.collector.models.anuncio import Anuncio
+from app.collector.models.autenticacao import Autenticacao
 
 class Collect:
     def __init__(self):
@@ -24,43 +25,82 @@ class Collect:
         tree_html =  html.fromstring(response_http_url.text)
 
         return tree_html          
+    
     def extraction_content_user(self, tree_html_location, user):
 
-        telefone = self._get_xpath_value(tree_html_location, user['utilizador']['telefone'])
-        morada = self._get_xpath_value(tree_html_location, user['utilizador']['endereco'])
-        horario = self._get_xpath_value(tree_html_location, user['utilizador']['hora_funcionamento'])
-        nome_empresa =  user['utilizador']['nome_empresa']   
-        utilizador = Utilizador (
+        nome = user['anunciante']['nome']
+        sexo = self._get_xpath_value_user(tree_html_location, user['anunciante']['sexo'] )
+        telefone = self._get_xpath_value_user(tree_html_location, user['anunciante']['telefone'])
+        link =  user['anunciante']['link']
+        email = self._get_xpath_value_user(tree_html_location, user['anunciante']['email'])
+        foto = self._get_xpath_value_user(tree_html_location, user['anunciante']['foto'], )
+        ilha = self._get_xpath_value_user(tree_html_location, user['anunciante']['ilha'])
+        descricao = self._get_xpath_value_user(tree_html_location, user['anunciante']['descricao'])
+        concelho = self._get_xpath_value_user(tree_html_location, user['anunciante']['concelho'])
+        horario_funcionamento = self._get_xpath_value_user(tree_html_location, user['anunciante']['horario_funcionamento'])
+        tipo = self._get_xpath_value_user(tree_html_location, user['anunciante']['tipo'])
+        endereco = self._get_xpath_value_user(tree_html_location, user['anunciante']['endereco'])
+        audit_user = "datacollector"
+
+        audit_timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        
+        anunciante = Anunciante(
+            nome = nome,  
+            sexo = sexo,
             telefone = telefone,
-            endereco = morada,
-            hora_funcionamento = horario,
-            nome_empresa = nome_empresa
-        )    
-        return asdict(utilizador)
+            link = link,
+            email = email,
+            foto = foto,
+            ilha = ilha,
+            descricao = descricao,
+            concelho = concelho,
+            horario_funcionamento = horario_funcionamento,
+            tipo = tipo,
+            endereco = endereco,
+            audit_user = audit_user,
+            audit_timestamp =  audit_timestamp
+
+        )         
+        return anunciante
     
     def extraction_content_annouct(self, tree_html_announcement, announcement, indice):
         
-        marca = self._get_xpath_value(tree_html_announcement, announcement['anuncio']['marca'])
-        numero_passageiro = self._get_xpath_value(tree_html_announcement, announcement['anuncio']['numero_passageiro'])
-        combustivel = self._get_xpath_value(tree_html_announcement, announcement['anuncio']['combustivel'])
-        ano = self._get_xpath_value(tree_html_announcement, announcement['anuncio']['ano'])
-        preco = self._get_xpath_value(tree_html_announcement, announcement['anuncio']['preco'])
-        taxa_extra = self._get_xpath_value(tree_html_announcement, announcement['anuncio']['caucao'])
-        transmissao = self._get_xpath_value(tree_html_announcement, announcement['anuncio']['transmissao'])
-        nome_empresa =  announcement['anuncio']['nome_empresa']   
+        marca = self._get_xpath_value(tree_html_announcement, announcement['anuncio']['marca'], indice)
+        numero_passageiro = self._get_xpath_value(tree_html_announcement, announcement['anuncio']['numero_passageiro'], indice)
+        combustivel = self._get_xpath_value(tree_html_announcement, announcement['anuncio']['combustivel'], indice)
+        ano = self._get_xpath_value(tree_html_announcement, announcement['anuncio']['ano'], indice)
+        preco = self._get_xpath_value(tree_html_announcement, announcement['anuncio']['preco'], indice)
+        caucao = self._get_xpath_value(tree_html_announcement, announcement['anuncio']['caucao'], indice)
+        fotografia = self._get_xpath_value(tree_html_announcement, announcement['anuncio']['fotografia'], indice)
+        gps = self._get_xpath_value(tree_html_announcement, announcement['anuncio']['gps'], indice)
+        ar_condicionado = self._get_xpath_value(tree_html_announcement, announcement['anuncio']['ar_condicionado'], indice)
+        transmissao = self._get_xpath_value(tree_html_announcement, announcement['anuncio']['transmissao'], indice)
+        disponibilidade = self._get_xpath_value(tree_html_announcement, announcement['anuncio']['disponibilidade'], indice)
+        modelo = self._get_xpath_value(tree_html_announcement, announcement['anuncio']['modelo'], indice)
+        data = self._get_xpath_value(tree_html_announcement, announcement['anuncio']['data'], indice)
+        audit_timestamp =  datetime.now().strftime("%Y-%m-%d %H:%M:%S")   
+        audit_user = "datacolletor" 
 
+        
         anuncio = Anuncio (
-            marca = self.error_tratament_index_error(marca,indice),
-            numero_passageiro = self.error_tratament_index_error(numero_passageiro,indice),
-            combustivel = self.error_tratament_index_error(combustivel,indice),
-            ano = self.error_tratament_index_error(ano,indice),
-            preco =  self.error_tratament_index_error(preco,indice),
-            caucao = self.error_tratament_index_error(taxa_extra,indice),
-            transmissao = self.error_tratament_index_error(transmissao,indice),  
-            nome_empresa = nome_empresa
+            marca = marca, 
+            modelo = modelo, 
+            numero_passageiro = numero_passageiro, 
+            combustivel= combustivel, 
+            ano = ano, 
+            preco = preco, 
+            caucao = caucao, 
+            fotografia = fotografia, 
+            ar_condicionado = ar_condicionado,  
+            gps = gps, 
+            disponibilidade = disponibilidade, 
+            transmissao = transmissao, 
+            audit_user = audit_user,
+            data = data, 
+            audit_timestamp = audit_timestamp 
         )
         
-        return asdict(anuncio)
+        return anuncio
     
     def error_tratament_index_error (self,campo,indice):
         try:
@@ -83,15 +123,25 @@ class Collect:
             Retorna:
                 numero_anuncios: retorna o numero de anuncios.    
         """
-        marca = self._get_xpath_value(tree_html_announcement, announcement['anuncio']['marca'])
+        #marca = self._get_xpath_value(tree_html_announcement, announcement['anuncio']['marca'], indice=None)
+        marca = tree_html_announcement.xpath(announcement['anuncio']['marca'])
         numero_anuncios = len(marca)
-        print ("OLIME PORRA ", numero_anuncios ,type(numero_anuncios)) 
         return numero_anuncios
 
-    def _get_xpath_value(self,tree_html,xpath):
+    def   _get_xpath_value(self,tree_html,xpath,indice):
         value = tree_html.xpath(xpath)
-        return value 
+        try:
+            if len(value) < 2:
+                return value
+            else:
+                return value[indice] 
+        except IndexError:
+            return value
      
+    def   _get_xpath_value_user(self,tree_html,xpath):
+        value = tree_html.xpath(xpath)
+        return value
+    
     def _request_http_offline(self, content_link):             
         with open(content_link, 'r', encoding='utf-8') as f:
             content_html = f.read()
@@ -102,7 +152,7 @@ class Collect:
     
     def config_file (self):
         try:
-            with open('/mnt/c/Users/HP/datacolletor/app/collector/etc/config.yaml') as file:
+            with open('/home/ruifortes/datacolletor/app/collector/etc/config.yaml') as file:
                 config_link = yaml.safe_load(file)    
         except FileNotFoundError as e:
             print (f"Arquivo não encontrado :{e}")

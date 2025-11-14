@@ -1,6 +1,7 @@
 import time  
 import json
 from datetime import datetime
+from pprint import pprint
 
 import yaml 
 import requests
@@ -9,12 +10,12 @@ from flask import jsonify
 
 from   app.collector.services.service import Collect
 from  app.collector.services.service_ai import CollectIA
-from schema import Anuncio
-from schema import Utilizador
-from schema import Avaliacao
+from app.collector.models.anunciante import Anunciante
 from ... import  dbt 
 from  app.collector.models.collector import  DataCollector
 from  ...app import app
+
+
 
 @app.route("/anuncio")
 def data_collect_anuncio():
@@ -38,14 +39,14 @@ def data_collect_anuncio():
                for indice in range(numero_anuncios): 
                    dados__annouct = colection.extraction_content_annouct(tree_html_announcement, site, indice)
                    data_json_annouct.append(dados__annouct)  
-          
-     
+               
+               print(data_json_annouct)
                #tree_html_announcement, tree_html_location = colection._request_http()
-               tree_html_user = colection._request_http_offline(url_user)
+               #tree_html_user = colection._request_http_offline(url_user)
 
-               dados_user = colection.extraction_content_user(tree_html_user, site)  
+               #dados_user = colection.extraction_content_user(tree_html_user, site)  
                             
-               data_json_user.append(dados_user)  
+               #data_json_user.append(dados_user)  
      
      except Exception as e :
           print("Erro aqui é isto aqui", e)   
@@ -70,20 +71,19 @@ def data_collect_anuncio_ia():
          for site in sites:                      
          
              anuncios = colection.extraction_AI_content_annouct(site)  
-         
+             
              for anuncio in anuncios:
                  dados_formatados = colection.format_data(anuncio)
                  data_json_annouct.append(dados_formatados)   
-         
+                 
              time.sleep(120)
                  
      except Exception as e :
           print("Erro aqui é isto aqui", e)   
-
-     print (data_json_annouct)
      
+     pprint(data_json_annouct)     
      #create(data_json)
-     requests.post("http://localhost:5001/received-data", json=data_json_annouct)
+     #requests.post("http://localhost:5001/received-data", json=data_json_annouct)
 
      return jsonify({"status": "coleta iniciada com sucesso"})  # resposta HTTP
     

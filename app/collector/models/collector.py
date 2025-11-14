@@ -10,10 +10,11 @@ class DataCollector(dbt.Model):
     __tablename__ = 't_datacollector'
 
     id = dbt.Column(dbt.Integer, primary_key=True)
-    data_coleta = dbt.Column(dbt.String(255))
-    nome_empresa = dbt.Column(dbt.String(255), nullable=False)
-    dados_anuncios = dbt.Column(JSONB, nullable=False)
-    dados_localizacao = dbt.Column(JSONB, nullable=False)
+    link = dbt.Column(dbt.String(255))
+    anunciante = dbt.Column(dbt.String(255), nullable=False)
+    dados = dbt.Column(JSONB, nullable=False)
+    audit_user = dbt.Column(dbt.String(300))
+    audit_timestamp = dbt.Column(dbt.DateTime)
 
     def __repr__(self):
-        return f'<DataCollector {self.nome_empresa}>'
+        return f'<DataCollector {self.nome_empresa}>'   

@@ -16,4 +16,11 @@ def create_app(config_mode) :
     
    dbt.init_app(app)
    migrate.init_app(app, dbt)
+
+       
+   from app.collector.models import anuncio
+   from app.collector.models import anunciante
+   from app.collector.models import anuncio
+   from app.collector.models import autenticacao
+    
    return app
