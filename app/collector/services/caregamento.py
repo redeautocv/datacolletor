@@ -2,6 +2,7 @@ import requests
 
 class Carregamento:
     def __init__(self):
+        
         pass
     
     def criar_anunciante(self, anunciante):
